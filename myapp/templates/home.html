@@ -1,0 +1,307 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Hub - Find Your Dream Ride</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('{% static "img/car.jpg" %}');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .navbar-custom {
+            background-color: #4B0082 !important;
+        }
+
+        .form-container {
+            background: rgba(30, 0, 60, 0.95); /* Dark purple */
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-control,
+        .form-select {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            color: white;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #ffffff;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .form-select option {
+            background: #4B0082;
+            color: white;
+        }
+
+        .btn-purple {
+            background: #6a0dad;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-purple:hover {
+            background: #8a2be2;
+            transform: scale(1.05);
+        }
+
+        .filter-menu {
+            display: none;
+            background: rgba(20, 0, 40, 0.9); /* Darker purple */
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .filter-menu.active {
+            display: block;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .content-wrapper {
+            margin-top: -60px; /* Moves content slightly higher */
+        }
+
+        .form-control::placeholder {
+            color: white !important;
+        }
+
+        .form-control {
+            color: white !important; 
+}
+
+
+        
+            
+         
+
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom shadow-md px-4 py-3 fixed-top">
+        <h1 class="text-2xl font-bold tracking-wide text-white">Vehicle Hub</h1>
+        <div class="ms-auto">
+            <a href="{% url 'list' %}"
+                class="btn btn-light text-purple-800 font-medium px-4 py-2 text-sm rounded-md shadow transition duration-300 ease-in-out hover:bg-purple-600 hover:text-white">
+                List All
+            </a>
+        </div>
+    </nav>
+
+
+
+
+    <div class="container content-wrapper">
+        <div class="row align-items-center">
+       
+            <div class="col-md-6 text-white">
+                <h1 class="text-4xl font-bold">Find Your Dream Vehicle</h1>
+
+
+                <p class="mt-3 text-lg">
+                    Discover the perfect <strong>car or bike</strong> that suits your needs.<br>
+                    Explore thousands of listings and get the best deals today.
+                </p>
+
+
+            </div>
+
+
+
+
+
+            <div class="col-md-6">
+                <div class="form-container">
+
+
+                    <form method="get" action="{% url 'list' %}">
+                        <div class="row justify-content-center">
+                            <div class="col-md-7">
+                                <input type="text" name="brand" class="form-control form-control-sm text-center text-bg-white"
+                                    placeholder="Search Brands here...  " value="{{ request.GET.brand }}">
+                            </div>
+
+
+
+                            <div class="col-md-3">
+                                <button type="submit" class="btn btn-sm btn-purple w-100">🔍</button>
+                            </div>
+
+
+
+
+                        </div>
+
+                        <div class="row justify-content-center mt-2">
+                            <div class="col-md-7">
+                                <select name="category" id="categorySelect"
+                                    class="form-select form-select-sm text-center">
+
+
+
+                                    <option value="">Vehicles</option>
+
+
+                                    <option value="Car" {% if request.GET.category == "Car" %}selected{% endif %}>Car
+                                    </option>
+
+                                    <option value="Bike" {% if request.GET.category == "Bike" %}selected{% endif %}>
+                                        Bike
+                                    </option>
+
+
+
+
+                                </select>
+                            </div>
+
+
+                            <div class="col-md-3">
+                                <button type="button" id="filterButton" class="btn btn-sm btn-purple w-100">Filter</button>
+                            </div>
+
+
+
+                        </div>
+
+                        <div class="filter-menu mt-3 p-2 rounded shadow-lg" id="filterMenu">
+                            <div class="row gy-1 text-center">
+                                <div class="col-md-6 car-type">
+
+
+                                    <select name="car_type" class="form-select form-select-sm text-center">
+
+                                        <option value="">Car Type</option>
+
+                                        <option value="SUV">SUV</option>
+
+                                        <option value="Sedan">Sedan</option>
+
+                                        <option value="Hatchback">Hatchback</option>
+                                    </select>
+
+
+                                </div>
+
+
+
+                                <div class="col-md-6 bike-type">
+                                    <select name="bike_type" class="form-select form-select-sm text-center">
+
+                                        <option value="">Bike Type</option>
+
+                                        <option value="Cruiser">Cruiser</option>
+
+                                        <option value="Sports">Sports</option>
+
+                                        <option value="Commuter">Commuter</option>
+                                    </select>
+                                </div>
+
+
+
+
+                                <div class="col-md-6">
+                                    <select name="ownership" class="form-select form-select-sm text-center">
+
+                                        <option value="">Ownership</option>
+
+                                        <option value="First">First</option>
+
+                                        <option value="Second">Second</option>
+
+                                        <option value="Third">Third</option>
+                                    </select>
+                                </div>
+
+
+
+
+                                <div class="col-md-12 d-flex justify-content-center mt-2">
+                                    <button type="submit" class="btn btn-sm btn-purple">Apply</button>
+                                </div>
+
+
+                            </div>
+                   
+                   
+                        </div>
+                    </form>
+             
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    <script>
+        document.getElementById("filterButton").addEventListener("click", function () {
+            let filterMenu = document.getElementById("filterMenu");
+            filterMenu.classList.toggle("active");
+        });
+
+        document.getElementById("categorySelect").addEventListener("change", function () {
+            let category = this.value;
+            let carType = document.querySelector(".car-type");
+            let bikeType = document.querySelector(".bike-type");
+
+            if (category === "Car") {
+                carType.classList.remove("hidden");
+                bikeType.classList.add("hidden");
+            } else if (category === "Bike") {
+                carType.classList.add("hidden");
+                bikeType.classList.remove("hidden");
+            } else {
+                carType.classList.remove("hidden");
+                bikeType.classList.remove("hidden");
+            }
+        });
+
+        window.onload = function () {
+            document.getElementById("categorySelect").dispatchEvent(new Event("change"));
+        };
+    </script>
+
+</body>
+
+</html>
