@@ -185,7 +185,7 @@
         const kmDrive = document.getElementById("kmDrive");
         const kmValue = document.getElementById("kmValue");
 
-        // Toggle filter panel visibility
+    
         filterBtn.addEventListener("click", function () {
             if (filterPanel.classList.contains("opacity-0")) {
                 filterPanel.classList.remove("opacity-0", "invisible");
@@ -196,7 +196,7 @@
             }
         });
 
-        // Show/hide car or bike type dropdowns based on selected category
+      
         categorySelect.addEventListener("change", function () {
             if (categorySelect.value === "Car") {
                 carTypeContainer.style.display = "block";
@@ -210,12 +210,11 @@
             }
         });
 
-        // Update price range value display
+      
         priceRange.addEventListener("input", function () {
             priceValue.textContent = `$${priceRange.value}`;
         });
 
-        // Update KM driven value display
         kmDrive.addEventListener("input", function () {
             kmValue.textContent = `${kmDrive.value} KM`;
         });
